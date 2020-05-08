@@ -1,0 +1,72 @@
+body{
+    background-image: url(../images/carapace.png), url(../images/Toad.png);
+    background-repeat: no-repeat;
+    background-position-x: 40rem, 3rem;
+    background-position-y: 4.4rem, 2rem;
+    background-size: 9rem;
+}
+
+.nav-tabs,
+.nav-link.active{
+    background-color: unset !important;
+}
+
+.main_title_container{
+    padding: 3rem 0rem 3rem;
+    text-align: center;
+
+}
+
+.container-main{
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.reviews{
+    display: flex;
+    flex-direction: column;
+}
+
+.review-title-container{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.badge-genre{
+    margin-left: 1rem;
+}
+.badge-platform{
+    display: block;
+}
+
+.review-title{
+    display: inline;
+}
+
+.lead{
+    margin-top: 1.5rem;
+}
+
+.review-link-container{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.icon{
+    width: 2rem;
+    margin-left: 1rem;
+}
+
+.review-comment-title-container{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.review-comment-comtainer{
+    height: 15rem;
+    overflow: auto;
+    overscroll-behavior-y: contain;
+}
