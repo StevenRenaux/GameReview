@@ -14,7 +14,6 @@ body{
 .main_title_container{
     padding: 3rem 0rem 3rem;
     text-align: center;
-
 }
 
 .container-main{
@@ -26,6 +25,7 @@ body{
 .reviews{
     display: flex;
     flex-direction: column;
+
 }
 
 .review-title-container{
@@ -69,4 +69,9 @@ body{
     height: 15rem;
     overflow: auto;
     overscroll-behavior-y: contain;
+}
+
+.Pagination-container{
+        display: flex;
+        justify-content: center;
 }
