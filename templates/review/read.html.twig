@@ -3,36 +3,41 @@
 {% block title %}{{parent()}}{{review.gamesTitle}}{% endblock %}
 
 {% block body %}
-    <div class="reviews-container col-lg-9">
-        <div class="reviews">
-                <div class="review jumbotron">
-                    {% for game in review.games %}
-                        <div class="review-title-container">
-                            <h2 class="game-title">{{game.name}}</h2> 
-                            <span class="badge-genre badge badge-danger">{{game.genre.name}}</span>
-                        </div>
-                        <div class="badge-platform">
-                        {% for platform in game.platform %}
-                        <span class="badge badge-light">{{platform.name}}</span>
-                        {% endfor %}
-                        </div>
-                    {% endfor %}
-                    <h3 class="review-title">{{review.title}}</h3><span> (publié le <time datetime="{{review.createdAt|date("Y-M-D")}}">{{review.createdAt|date("d-m-Y")}})</time></span>
-                    <p class="lead">{{review.resume}}</p>
-                    <hr class="my-4">
-                    <div class="review-comment-title-container">
-                        <h4 class="review-comment">Commentaires</h4>
-                        <a class="btn btn-primary btn-lg" href="{{ path('comment_add', {'slug': review.slug}) }}" role="button">Ajouter un commentaire</a>
-                    </div>
-                    <div class="review-comment-comtainer">
-                        {% for comment in review.comments %}
-                            <h5>{{comment.title}}<h5>
-                            <p class="lead">{{comment.content}}</p>
-                            <span> publié le <time datetime="{{comment.createdAt|date("Y-M-D")}}">{{comment.createdAt|date("d-m-Y")}}</time> par {{comment.author}}</span>
-                            <hr class="my-4">
-                        {% endfor %}
-                    </div>
+    <div class="reviews">
+        <div class="review jumbotron">
+            {% for game in review.games %}
+                <div class="review-title-container">
+                    <h2 class="game-title">{{game.name}}</h2> 
+                    <span class="badge-genre badge badge-danger">{{game.genre.name}}</span>
                 </div>
+                <div class="badge-platform">
+                {% for platform in game.platform %}
+                <span class="badge badge-light">{{platform.name}}</span>
+                {% endfor %}
+                </div>
+            {% endfor %}
+            <h3 class="review-title">{{review.title}}</h3><span> (publié le <time datetime="{{review.createdAt|date("Y-M-D")}}">{{review.createdAt|date("d-m-Y")}})</time></span>
+            <p class="lead">{{review.resume}}</p>
+            <hr class="my-4">
+            <div class="review-comment-title-connection-container">
+                <h4 class="review-comment">Commentaires</h4>
+                {% if app.user %}
+                <a class="btn btn-primary btn-lg" href="{{ path('comment_add', {'slug': review.slug}) }}" role="button">Ajouter un commentaire</a>
+                {% else %}
+                <div class ="comment-connection-container">
+                    <a class="btn btn-outline-success" href="{{ path('app_login') }}">Se connecter</a>
+                    <p>Vous devez être connecté pour ajouter un commentaire</p>
+                </div>
+                {% endif %}
+            </div>
+            <div class="review-comment-container">
+                {% for comment in review.comments %}
+                    <h5>{{comment.title}}<h5>
+                    <p class="lead">{{comment.content}}</p>
+                    <span> publié le <time datetime="{{comment.createdAt|date("Y-M-D")}}">{{comment.createdAt|date("d-m-Y")}}</time> par {{comment.author}}</span>
+                    <hr class="my-4">
+                {% endfor %}
+            </div>
         </div>
     </div>
 

@@ -3,12 +3,19 @@
 {% block title %}{{parent()}} Ajouter un commentaire{% endblock %}
 
 {% block body %}
-<div class="col-lg-9">
+
 {{ form_start(form) }}
 
-    {{ form_row(form) }}
+    <div class="comment-form-label">{{form_label(form.title) }}</div>
+    <div class="comment-form-input">{{form_widget(form.title) }}</div>
+
+    <div class="comment-form-label">{{form_label(form.content) }}</div>
+    <div class="comment-form-input">{{form_widget(form.content) }}</div>
+
+    <div class="comment-form-label">{{form_label(form.author) }}</div>
+    <div class="comment-form-input">{{form_widget(form.author) }}</div>
 
     <button type="submit" class="btn btn-primary">Ajouter</button>
 {{ form_end(form) }}
-</div>
+
 {% endblock %}

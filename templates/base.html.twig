@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>{% block title %}Game Review - {% endblock %}</title>
         {% block stylesheets %}
         <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet"/>
@@ -9,15 +9,17 @@
         {% endblock %}
     </head>
     <body class="container-md">
-        <div class="main_title_container">
-            <h1 class= "main_title">Game Review</h1>
-        </div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <header>
+            <div class="main_title_container">
+                <h1 class= "main_title">Game Review</h1>
+            </div>
+            <nav class="navbar navbar-expand-lg navbar-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav nav nav-tabs">
+
+            <div class="collapse navbar-collapse" id="navbarColor03">
+                <ul class="navbar-nav nav-tabs">
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ path('review_browse') }}">Home</a>
                     </li>
@@ -32,14 +34,48 @@
                         {% endfor %}
                         </div>
                     </li>
+                    <li class="nav-item dropdown nav-item-console">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Consoles</a>
+                        <div class="dropdown-menu" style="">
+                        {% for platform in platforms %}
+                            <a class="dropdown-item" href="#">{{platform.name}}</a>
+                        {% endfor %}
+                        </div>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Back-Office</a>
+                        <div class="dropdown-menu" style="">
+                            <a class="dropdown-item" href="#">Reviews</a>
+                            <a class="dropdown-item" href="">Genre</a>
+                            <a class="dropdown-item" href="">Consoles</a>
+                            <a class="dropdown-item" href="">Utilisateurs</a>
+                        </div>
+                    </li>
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav nav-tabs">
+                    {% if app.user %}
+                        <li class="nav-item mr-3">{{ app.user.username }}</li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-danger" href="{{ path('app_logout') }}">Deconnexion</a>
+                        </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="btn btn-outline-success" href="{{ path('app_login') }}">Se connecter</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
-        </nav>
+            </nav>
+        </header>
         <main>
             <div class="container-main">
-                {% block body %}
-                {% endblock %}
-                <div class="aside-container col-lg-3">
+                <div class="reviews-container">
+                    {% block body %}
+                    {% endblock %}
+                </div>
+                <div class="aside-container">
                     <aside>
                         <div class="card mb-3">
                         <h3 class="card-header">Consoles</h3>
@@ -59,5 +95,6 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
         {% endblock %}
+
     </body>
 </html>
