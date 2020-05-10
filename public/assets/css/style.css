@@ -138,6 +138,13 @@ body{
 }
 
 .comment-form-input,
-.login-form_input{
+.login-form_input,
+.edit-form-input{
     margin-bottom: 2rem;
 }
+
+.edit-form-checkbox{
+
+
+}
+

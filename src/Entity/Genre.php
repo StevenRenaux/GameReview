@@ -24,11 +24,6 @@ class Genre
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Game", mappedBy="genre", orphanRemoval=true)
-     */
-    private $game;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -38,9 +33,20 @@ class Genre
      */
     private $updatedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Game", mappedBy="genre", orphanRemoval=true)
+     */
+    private $games;
+
     public function __construct()
     {
-        $this->game = new ArrayCollection();
+        $this->games = new ArrayCollection();
+        $this->createdAt = new \DateTime();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -56,37 +62,6 @@ class Genre
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Game[]
-     */
-    public function getGame(): Collection
-    {
-        return $this->game;
-    }
-
-    public function addGame(Game $game): self
-    {
-        if (!$this->game->contains($game)) {
-            $this->game[] = $game;
-            $game->setGenre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGame(Game $game): self
-    {
-        if ($this->game->contains($game)) {
-            $this->game->removeElement($game);
-            // set the owning side to null (unless already changed)
-            if ($game->getGenre() === $this) {
-                $game->setGenre(null);
-            }
-        }
 
         return $this;
     }
@@ -111,6 +86,37 @@ class Genre
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Game[]
+     */
+    public function getGames(): Collection
+    {
+        return $this->games;
+    }
+
+    public function addGame(Game $game): self
+    {
+        if (!$this->games->contains($game)) {
+            $this->games[] = $game;
+            $game->setGenre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGame(Game $game): self
+    {
+        if ($this->games->contains($game)) {
+            $this->games->removeElement($game);
+            // set the owning side to null (unless already changed)
+            if ($game->getGenre() === $this) {
+                $game->setGenre(null);
+            }
+        }
 
         return $this;
     }

@@ -24,23 +24,6 @@ class Game
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Genre", inversedBy="game")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $genre;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Platform", inversedBy="games")
-     */
-    private $platform;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Review", inversedBy="games")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $review;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -50,9 +33,21 @@ class Game
      */
     private $updatedAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Genre", inversedBy="games")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $genre;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Platform", inversedBy="games")
+     */
+    private $platform;
+
     public function __construct()
     {
         $this->platform = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function __toString()
@@ -73,6 +68,30 @@ class Game
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -111,42 +130,6 @@ class Game
         if ($this->platform->contains($platform)) {
             $this->platform->removeElement($platform);
         }
-
-        return $this;
-    }
-
-    public function getReview(): ?Review
-    {
-        return $this->review;
-    }
-
-    public function setReview(?Review $review): self
-    {
-        $this->review = $review;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }

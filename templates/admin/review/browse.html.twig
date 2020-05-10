@@ -1,0 +1,37 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ parent() }} Back-Office Review{% endblock %}
+
+{% block body %}
+<div class="row">
+    <h2 class="page__title mt-3">Liste des Reviews</h1>
+</div>
+<div class="row">
+    <a href="{{ path('admin_review_add') }}" class="btn btn-outline-success mt-3">Ajouter une Review</a>
+</div>
+
+<table class="table table-hover mt-3">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Jeu</th>
+      <th scope="col">Titre de la review</th>
+      <th scope="col">Date de création</th>
+      <th scope="col">Date de mise à jour</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for review in reviews %}
+    <tr>
+      <th scope="row">{{review.id}}</th>
+      <td>{{review.game.name}}</td>
+      <td>{{review.title}}</td>
+      <td>{{review.createdAt|date('d-m-Y H:i') }}</td>
+      <td>{{review.updatedAt is not null ? review.updatedAt|date('d-m-Y H:i')}}</td>
+      <td><a href="{{ path('admin_review_edit', {'id': review.id}) }}">Modifier</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table> 
+{% endblock %}

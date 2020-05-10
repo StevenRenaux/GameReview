@@ -1,0 +1,35 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ parent() }} Back-Office Genre{% endblock %}
+
+{% block body %}
+<div class="row">
+    <h2 class="page__title mt-3">Liste des Genres</h1>
+</div>
+<div class="row">
+    <a href="{{ path('admin_genre_add') }}" class="btn btn-outline-success mt-3">Ajouter un Genre</a>
+</div>
+
+<table class="table table-hover mt-3">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Nom du genre</th>
+      <th scope="col">Date de création</th>
+      <th scope="col">Date de mise à jour</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for genre in genres %}
+    <tr>
+      <th scope="row">{{genre.id}}</th>
+      <td>{{genre.name}}</td>
+      <td>{{genre.createdAt|date('d-m-Y H:i') }}</td>
+      <td>{{genre.updatedAt is not null ? genre.updatedAt|date('d-m-Y H:i')}}</td>
+      <td><a href="{{ path('admin_genre_edit', {'id': genre.id}) }}">Modifier</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table> 
+{% endblock %}

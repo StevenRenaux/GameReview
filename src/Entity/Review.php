@@ -34,14 +34,9 @@ class Review
     private $content;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Game", mappedBy="review", orphanRemoval=true)
+     * @ORM\Column(type="string", length=255)
      */
-    private $games;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="review", orphanRemoval=true)
-     */
-    private $comments;
+    private $slug;
 
     /**
      * @ORM\Column(type="datetime")
@@ -54,19 +49,20 @@ class Review
     private $updatedAt;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="review", orphanRemoval=true)
      */
-    private $slug;
+    private $comments;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Game", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $game;
 
     public function __construct()
     {
-        $this->games = new ArrayCollection();
         $this->comments = new ArrayCollection();
-    }
-
-    public function __toString()
-    {
-        return $this->title;
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -110,33 +106,38 @@ class Review
         return $this;
     }
 
-    /**
-     * @return Collection|Game[]
-     */
-    public function getGames(): Collection
+    public function getSlug(): ?string
     {
-        return $this->games;
+        return $this->slug;
     }
 
-    public function addGame(Game $game): self
+    public function setSlug(string $slug): self
     {
-        if (!$this->games->contains($game)) {
-            $this->games[] = $game;
-            $game->setReview($this);
-        }
+        $this->slug = $slug;
 
         return $this;
     }
 
-    public function removeGame(Game $game): self
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        if ($this->games->contains($game)) {
-            $this->games->removeElement($game);
-            // set the owning side to null (unless already changed)
-            if ($game->getReview() === $this) {
-                $game->setReview(null);
-            }
-        }
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -172,46 +173,14 @@ class Review
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getGame(): ?Game
     {
-        return $this->createdAt;
+        return $this->game;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setGame(Game $game): self
     {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getGamesTitle()
-    {
-        foreach ($this->games as $game){
-            $game->getName();
-        }
-        return $game;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
+        $this->game = $game;
 
         return $this;
     }

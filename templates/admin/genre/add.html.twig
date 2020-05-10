@@ -1,0 +1,14 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}{{ parent() }} Back-Office - Créer un Genre{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <h1 class="page__title mt-3">Créer un Genre</h1>
+</div>
+
+{{ include('admin/genre/_form.html.twig') }}
+
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}{{ parent() }} Back-Office - Créer une Review{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <h1 class="page__title mt-3">Créer une Review</h1>
+</div>
+
+{{ include('admin/review/_form.html.twig') }}
+
+
+{% endblock %}

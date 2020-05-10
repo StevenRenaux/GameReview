@@ -7,17 +7,15 @@
     <div class="reviews">
         {% for review in reviews %}
             <div class="review jumbotron">
-                {% for game in review.games %}
                     <div class="review-title-container">
-                        <h2 class="game-title">{{game.name}}</h2> 
-                        <span class="badge-genre badge badge-danger">{{game.genre.name}}</span>
+                        <h2 class="game-title">{{review.game.name}}</h2> 
+                        <span class="badge-genre badge badge-danger">{{review.game.genre.name}}</span>
                     </div>
                     <div class="badge-platform">
-                    {% for platform in game.platform %}
+                    {% for platform in review.game.platform %}
                     <span class="badge badge-light">{{platform.name}}</span>
                     {% endfor %}
                     </div>
-                {% endfor %}
                 <h3 class="review-title">{{review.title}}</h3><span> (publié le <time datetime="{{review.createdAt|date("Y-M-D")}}">{{review.createdAt|date("d-m-Y")}})</time></span>
                 <p class="lead">{{review.resume}}</p>
                 <hr class="my-4">

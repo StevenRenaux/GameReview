@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200430200051 extends AbstractMigration
+final class Version20200510095139 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -28,11 +28,12 @@ final class Version20200430200051 extends AbstractMigration
         $this->addSql('ALTER TABLE comment ADD review_id INT NOT NULL');
         $this->addSql('ALTER TABLE comment ADD CONSTRAINT FK_9474526C3E2E969B FOREIGN KEY (review_id) REFERENCES review (id)');
         $this->addSql('CREATE INDEX IDX_9474526C3E2E969B ON comment (review_id)');
-        $this->addSql('ALTER TABLE game ADD genre_id INT NOT NULL, ADD review_id INT NOT NULL');
+        $this->addSql('ALTER TABLE review ADD game_id INT NOT NULL');
+        $this->addSql('ALTER TABLE review ADD CONSTRAINT FK_794381C6E48FD905 FOREIGN KEY (game_id) REFERENCES game (id)');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_794381C6E48FD905 ON review (game_id)');
+        $this->addSql('ALTER TABLE game ADD genre_id INT NOT NULL');
         $this->addSql('ALTER TABLE game ADD CONSTRAINT FK_232B318C4296D31F FOREIGN KEY (genre_id) REFERENCES genre (id)');
-        $this->addSql('ALTER TABLE game ADD CONSTRAINT FK_232B318C3E2E969B FOREIGN KEY (review_id) REFERENCES review (id)');
         $this->addSql('CREATE INDEX IDX_232B318C4296D31F ON game (genre_id)');
-        $this->addSql('CREATE INDEX IDX_232B318C3E2E969B ON game (review_id)');
     }
 
     public function down(Schema $schema) : void
@@ -45,9 +46,10 @@ final class Version20200430200051 extends AbstractMigration
         $this->addSql('DROP INDEX IDX_9474526C3E2E969B ON comment');
         $this->addSql('ALTER TABLE comment DROP review_id');
         $this->addSql('ALTER TABLE game DROP FOREIGN KEY FK_232B318C4296D31F');
-        $this->addSql('ALTER TABLE game DROP FOREIGN KEY FK_232B318C3E2E969B');
         $this->addSql('DROP INDEX IDX_232B318C4296D31F ON game');
-        $this->addSql('DROP INDEX IDX_232B318C3E2E969B ON game');
-        $this->addSql('ALTER TABLE game DROP genre_id, DROP review_id');
+        $this->addSql('ALTER TABLE game DROP genre_id');
+        $this->addSql('ALTER TABLE review DROP FOREIGN KEY FK_794381C6E48FD905');
+        $this->addSql('DROP INDEX UNIQ_794381C6E48FD905 ON review');
+        $this->addSql('ALTER TABLE review DROP game_id');
     }
 }

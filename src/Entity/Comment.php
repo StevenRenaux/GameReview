@@ -37,12 +37,6 @@ class Comment
     private $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Review", inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $review;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -52,10 +46,16 @@ class Comment
      */
     private $updatedAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Review", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $review;
+
     public function __construct()
     {
-        $this->resume = substr($this->content, 0, 200);
         $this->createdAt = new \DateTime();
+        $this->resume = substr($this->content, 0, 50) . '...';
     }
 
     public function getId(): ?int
@@ -111,18 +111,6 @@ class Comment
         return $this;
     }
 
-    public function getReview(): ?Review
-    {
-        return $this->review;
-    }
-
-    public function setReview(?Review $review): self
-    {
-        $this->review = $review;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -143,6 +131,18 @@ class Comment
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getReview(): ?Review
+    {
+        return $this->review;
+    }
+
+    public function setReview(?Review $review): self
+    {
+        $this->review = $review;
 
         return $this;
     }
