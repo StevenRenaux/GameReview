@@ -1,0 +1,22 @@
+{{ form_start(userForm) }}
+
+    <div>{{form_label (userForm.username) }}</div>
+    <div class="user-form-help">{{form_widget (userForm.username) }}</div>
+
+    <div>{{form_label (userForm.email) }}</div>
+    <div class="user-form-help">{{form_widget (userForm.email) }}</div>
+
+    <div>{{form_label (userForm.roles, null, {'label_attr' : {'class': 'user-form-label--role'}}) }}</div>
+    <div class="user-form-help--roles">{{form_help (userForm.roles) }}</div>
+    <div class="user-form-input">{{form_widget (userForm.roles) }}</div>
+
+    <div>{{form_widget (userForm.password) }}</div>
+    <div class="user-form-help">{{form_help (userForm.password) }}</div>
+
+    {% if userForm.cgu is defined %}
+    <div class="user-form-input">{{form_widget (userForm.cgu) }}</div>
+    {% endif %}
+
+    <button type="submit" class="btn btn-warning">{{ button_label|default('Ajouter') }}</button>
+
+{{ form_end(userForm)  }}

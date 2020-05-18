@@ -6,7 +6,6 @@ use App\Entity\Genre;
 use App\Form\DeleteType;
 use App\Form\GenreType;
 use App\Repository\GenreRepository;
-use App\Services\Slugger;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,12 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
- * @Route("/admin/genre", name="admin_")
+ * @Route("/admin/genre", name="admin_genre_")
  */
 class AdminGenreController extends AbstractController
 {
     /**
-     * @Route("/browse", name="genre_browse")
+     * @Route("/browse", name="browse")
      */
     public function browse(GenreRepository $genreRepository)
     {
@@ -29,7 +28,7 @@ class AdminGenreController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="genre_edit", requirements={"id": "\d+"})
+     * @Route("/edit/{id}", name="edit", requirements={"id": "\d+"})
      */
     public function edit(Request $request, Genre $genre)
     {
@@ -38,7 +37,6 @@ class AdminGenreController extends AbstractController
         $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $genre = $form->getData();
 
                 $em = $this->getDoctrine()->getManager();
                 $em->flush();
@@ -59,7 +57,7 @@ class AdminGenreController extends AbstractController
     }
 
     /**
-     * @Route("/add", name="genre_add")
+     * @Route("/add", name="add")
      */
     public function add(Request $request)
     {
@@ -69,7 +67,6 @@ class AdminGenreController extends AbstractController
         $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $genre = $form->getData();
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($genre);
@@ -85,7 +82,7 @@ class AdminGenreController extends AbstractController
     }
 
     /**
-     * @Route("/delete/{id}", name="genre_delete", requirements={"id": "\d+"}, methods={"POST", "DELETE"})
+     * @Route("/delete/{id}", name="delete", requirements={"id": "\d+"}, methods={"POST", "DELETE"})
      */
     public function delete(EntityManagerInterface $em, Genre $genre, Request $request)
     {
@@ -97,7 +94,7 @@ class AdminGenreController extends AbstractController
             $em->flush();
         }
 
-        // L'objet est ajouté, on redirige vers la liste des articles
+        // L'objet est ajouté, on redirige vers la liste des genres
         return $this->redirectToRoute('admin_genre_browse');
     }
 }

@@ -1,0 +1,14 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}{{ parent() }}Créer un Utilisateur{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <h1 class="page__title mt-3">Créer un Utilisateur</h1>
+</div>
+
+{{ include('admin/user/_form.html.twig') }}
+
+
+{% endblock %}

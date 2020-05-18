@@ -44,6 +44,11 @@ class Game
      */
     private $platform;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Review", mappedBy="game", cascade={"persist", "remove"})
+     */
+    private $review;
+
     public function __construct()
     {
         $this->platform = new ArrayCollection();
@@ -129,6 +134,23 @@ class Game
     {
         if ($this->platform->contains($platform)) {
             $this->platform->removeElement($platform);
+        }
+
+        return $this;
+    }
+
+    public function getReview(): ?Review
+    {
+        return $this->review;
+    }
+
+    public function setReview(Review $review): self
+    {
+        $this->review = $review;
+
+        // set the owning side of the relation if necessary
+        if ($review->getReview() !== $this) {
+            $review->setReview($this);
         }
 
         return $this;

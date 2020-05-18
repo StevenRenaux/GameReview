@@ -19,23 +19,42 @@ class ReviewRepository extends ServiceEntityRepository
         parent::__construct($registry, Review::class);
     }
 
-    // /**
-    //  * @return Review[] Returns an array of Review objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param int $id Platform Id
+     * @return Review[] Returns an array of Review objects by platform
+     */
+    public function findByPlatform(int $id)
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        $qb = $this->createQueryBuilder('r');
+        $qb
+            ->addSelect('g, p, ge')
+            ->leftJoin('r.game', 'g')
+            ->leftJoin('r.comments', 'c')
+            ->leftJoin('g.platform', 'p')
+            ->leftJoin('g.genre', 'ge')
+            ->Where('p.id = :val')
+            ->setParameter('val', $id)
+            ->orderBy('r.createdAt', 'DESC')
         ;
+        return $qb->getQuery()->getResult();
     }
-    */
 
+    /**
+     * @return Review[] Returns an array of Review objects order by id DESC
+     */
+    public function findByOrderOfCreation()
+    {
+        $qb = $this->createQueryBuilder('r');
+        $qb
+            ->addSelect('g, p, ge')
+            ->leftJoin('r.game', 'g')
+            ->leftJoin('r.comments', 'c')
+            ->leftJoin('g.platform', 'p')
+            ->leftJoin('g.genre', 'ge')
+            ->orderBy('r.createdAt', 'DESC')
+        ;
+        return $qb->getQuery()->getResult();
+    }
     /*
     public function findOneBySomeField($value): ?Review
     {

@@ -1,23 +1,26 @@
 {{ form_start(reviewForm) }}
 
     <div>{{form_label (reviewForm.game.name) }}</div>
-    <div class="edit-form-input">{{form_widget (reviewForm.game.name) }}</div>
+    <div>{{form_widget (reviewForm.game.name) }}</div>
+    <div class="review-form-help">{{form_help (reviewForm.game.name) }}</div>
 
     <div>{{form_label (reviewForm.game.genre) }}</div>
-    <div class="edit-form-input">{{form_widget (reviewForm.game.genre) }}</div>
+    <div class="review-form-input">{{form_widget (reviewForm.game.genre) }}</div>
 
-    <div>{{form_label (reviewForm.game.platform) }}</div>
-    <div class="edit-form-checkbox">
+    <div>{{form_label (reviewForm.game.platform, null, {'label_attr' : {'class': 'review-form-label--platform'}}) }}</div>
+    <div class="review-form-help--platform">{{form_help (reviewForm.game.platform) }}</div>
+    <div class="review-form-checkbox">
         {% for platform in reviewForm.game.platform %}
-            <div class="edit-form-input">{{form_widget (platform) }}</div>
+            <div class="review-form-input">{{form_widget (platform) }}</div>
         {% endfor %}
     </div>
 
     <div>{{form_label (reviewForm.title) }}</div>
-    <div class="edit-form-input">{{form_widget (reviewForm.title) }}</div>
+    <div>{{form_widget (reviewForm.title) }}</div>
+    <div class="review-form-help">{{form_help (reviewForm.title) }}</div>
 
     <div>{{form_label (reviewForm.content) }}</div>
-    <div class="edit-form-input">{{form_widget (reviewForm.content) }}</div>
+    <div class="review-form-input">{{form_widget (reviewForm.content) }}</div>
 
     <button type="submit" class="btn btn-warning">{{ button_label|default('Ajouter') }}</button>
 

@@ -54,7 +54,7 @@ class Review
     private $comments;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Game", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Game", inversedBy="review", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $game;

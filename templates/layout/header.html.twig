@@ -1,82 +1,81 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>{% block title %}Game Review - {% endblock %}</title>
-        {% block stylesheets %}
-        <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet"/>
-        <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"/>
-        {% endblock %}
-    </head>
-    <body class="container-md">
-        <header>
-            <div class="main_title_container">
-                <h1 class= "main_title">Game Review</h1>
-            </div>
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarColor03">
-                    <ul class="navbar-nav nav-tabs">
-                        {% set route = app.request.attributes.get('_route') %}
-                        <li class="nav-item">
-                            {% if route == 'review_browse' %}
-                            <a class="nav-link active" href="{{ path('review_browse') }}">Home</a>
-                            {% else %}
-                            <a class="nav-link" href="{{ path('review_browse') }}">Home</a>
-                            {% endif %}
-                        </li>
-                        <!--
-                        <li class="nav-item">
-                            <a class="nav-link">Games</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Genres</a>
-                            <div class="dropdown-menu" style="">
-                            {% for genre in genres %}
-                                <a class="dropdown-item" href="#">{{genre.name}}</a>
-                            {% endfor %}
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown nav-item-console">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Consoles</a>
-                            <div class="dropdown-menu" style="">
-                            {% for platform in platforms %}
-                                <a class="dropdown-item" href="#">{{platform.name}}</a>
-                            {% endfor %}
-                            </div>
-                        </li>
-                        -->
-                        {% if is_granted('ROLE_ADMIN') %}
-                        <li class="nav-item dropdown">
-                            {% if route == 'admin_review_browse' %}
-                            <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Back-Office</a>
-                            {% else %}
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Back-Office</a>
-                            {% endif %}
-                            <div class="dropdown-menu" style="">
+<body class="container-md">
+    <header>
+        <div class="main_title_container">
+            <h1 class= "main_title">Game Review</h1>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor03">
+                <ul class="navbar-nav nav-tabs">
+                    {% set route = app.request.attributes.get('_route') %}
+                    <li class="nav-item">
+                        {% if route == 'review_browse' %}
+                        <a class="nav-link active" href="{{ path('review_browse') }}">Home</a>
+                        {% else %}
+                        <a class="nav-link" href="{{ path('review_browse') }}">Home</a>
+                        {% endif %}
+                    </li>
+                    <!--
+                    <li class="nav-item">
+                        <a class="nav-link">Games</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Genres</a>
+                        <div class="dropdown-menu" style="">
+                        {% for genre in genres %}
+                            <a class="dropdown-item" href="#">{{genre.name}}</a>
+                        {% endfor %}
+                        </div>
+                    </li>
+                    -->
+                    <li class="nav-item dropdown nav-item-console">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Consoles</a>
+                        <div class="dropdown-menu" style="">
+                        {% for platform in platforms %}
+                            <a class="dropdown-item" href="{{ path('platform_read', {'name': platform.name}) }}">{{platform.name}}</a>
+                        {% endfor %}
+                        </div>
+                    </li>
+                    {% if is_granted('ROLE_MODERATOR') %}
+                    <li class="nav-item dropdown">
+                        {% if route == 'admin_review_browse' %}
+                        <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Back-Office</a>
+                        {% else %}
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Back-Office</a>
+                        {% endif %}
+                        <div class="dropdown-menu" style="">
+                            {% if is_granted('ROLE_ADMIN') %}
                                 <a class="dropdown-item" href="{{ path('admin_review_browse') }}">Reviews</a>
                                 <a class="dropdown-item" href="{{ path('admin_genre_browse') }}">Genre</a>
-                                <a class="dropdown-item" href="">Consoles</a>
-                                <a class="dropdown-item" href="">Utilisateurs</a>
-                            </div>
-                        </li>
-                        {% endif %}
-                    </ul>
-                    <ul class="navbar-nav nav-tabs">
-                        {% if app.user %}
-                            <li class="nav-item mr-3">{{ app.user.username }}</li>
-                            <li class="nav-item">
-                                <a class="btn btn-outline-danger" href="{{ path('app_logout') }}">Deconnexion</a>
-                            </li>
-                        {% else %}
+                                <a class="dropdown-item" href="{{ path('admin_platform_browse') }}">Consoles</a>
+                                <a class="dropdown-item" href="{{ path('admin_user_browse') }}">Utilisateurs</a>
+                            {% endif %}
+                            <a class="dropdown-item" href="{{ path('admin_comment_browse') }}">Commentaires</a>
+                        </div>
+                    </li>
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav nav-tabs nav-users">
+                    {% if app.user %}
+                        <li class="nav-item mr-3">Bienvenue {{ app.user.username }}</li>
                         <li class="nav-item">
-                            <a class="btn btn-outline-success" href="{{ path('app_login') }}">Se connecter</a>
+                            <a class="btn btn-outline-info mr-3" href="{{ path('user_edit', {'username': app.user.username}) }}">Modifier mon compte</a>
                         </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <main>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-danger" href="{{ path('app_logout') }}">Deconnexion</a>
+                        </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="btn btn-outline-info mr-3" href="{{ path('user_add') }}">Créer un compte</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-success" href="{{ path('app_login') }}">Se connecter</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>

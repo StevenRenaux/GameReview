@@ -1,0 +1,14 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}{{ parent() }}Créer une Console{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <h1 class="page__title mt-3">Créer une Console</h1>
+</div>
+
+{{ include('admin/platform/_form.html.twig') }}
+
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}{% endblock %}
+
+{% block body %}
+
+    <div class="reviews">
+        {% for review in reviews %}
+            <div class="review jumbotron">
+                    <div class="review-title-container">
+                        <h2 class="game-title">{{review.game.name}}</h2> 
+                        <span class="badge-genre badge badge-danger">{{review.game.genre.name}}</span>
+                    </div>
+                    <div class="badge-platform">
+                    {% for platform in review.game.platform %}
+                    <span class="badge badge-light">{{platform.name}}</span>
+                    {% endfor %}
+                    </div>
+                <h3 class="review-title">{{review.title}}</h3><span> (publié le <time datetime="{{review.createdAt|date("Y-M-D")}}">{{review.createdAt|date("d-m-Y")}})</time></span>
+                <p class="lead">{{review.resume}}</p>
+                <hr class="my-4">
+                <div class="review-link-container">
+                    <a class="btn btn-primary btn-lg" href="{{ path('review_read', {'slug': review.slug }) }}" role="button">Lire la review</a>
+                    <div><img src="{{ asset('assets/images/comment-icon.png') }}" class="icon" alt="commentaire">{{ review.comments|length }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="Pagination-container">
+        {{ knp_pagination_render(reviews) }}
+    </div>
+{% endblock %}

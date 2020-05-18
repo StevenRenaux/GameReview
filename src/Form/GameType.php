@@ -3,10 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Game;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class GameType extends AbstractType
 {
@@ -15,16 +16,37 @@ class GameType extends AbstractType
         $builder
             ->add('name', null, [
             'label'=>'Titre du jeu',
+            'help'=>'Le titre du jeu doit être compris en 2 et 100 caractères',
+            'constraints'=>[
+                new NotBlank([
+                    'message'=>'Ce champ ne peut être vide',
+                ]),
+                new Length([
+                    'min' => 2,
+                    'max' => 100,
+                    'minMessage' => 'Le titre doit être composé au minimum de {{ limit }} caractères',
+                    'maxMessage' => 'Le titre doit être composé au maximum de {{ limit }} caractères',
+                ])
+            ],
             ])
-            ->add('genre')
+            ->add('genre', null, [
+                'placeholder'=>'Selectionner un genre',
+                'constraints'=>[
+                    new NotBlank([
+                        'message'=>'Ce champ ne peut être vide',
+                    ]),
+                ],
+            ])
             ->add('platform', null, [
                 'label'=>'Console(s)',
+                'help'=>'Selectionner au minimum une console',
                 'expanded'=>true,
                 'multiple'=>true,
-                'query_builder'=>function (EntityRepository $er){
-                    return $er->createQueryBuilder('p')
-                        ->orderBy('p.name', 'ASC');
-                },
+                'constraints'=> [
+                    new NotBlank([
+                        'message'=>'Ce champ ne doit pas être vide'
+                    ]),
+                ],
             ])
         ;
     }

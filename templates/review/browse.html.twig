@@ -5,6 +5,15 @@
 {% block body %}
 
     <div class="reviews">
+    {% for message in app.flashes('success') %}
+    <div class="flash-notice">
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4 class="alert-heading">Bienvenue!</h4>
+            <p class="mb-0">{{message}}</p>
+        </div>
+    </div>
+    {% endfor %}
         {% for review in reviews %}
             <div class="review jumbotron">
                     <div class="review-title-container">

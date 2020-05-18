@@ -28,6 +28,9 @@ class CommentController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
 
             $comment->setReview($review);
+            $comment->setResume(substr($comment->getContent(), 0, 300) . '...');
+            $comment->setAuthor($this->getUser()->getUsername());
+            $comment->setUser($this->getUser());
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($comment);

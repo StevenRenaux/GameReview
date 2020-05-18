@@ -1,0 +1,35 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ parent() }}Consoles{% endblock %}
+
+{% block body %}
+<div class="row">
+    <h2 class="page__title mt-3">Liste des Consoles</h1>
+</div>
+<div class="row">
+    <a href="{{ path('admin_platform_add') }}" class="btn btn-outline-success mt-3">Ajouter une Console</a>
+</div>
+
+<table class="table table-hover mt-3">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Nom de la console</th>
+      <th scope="col">Date de création</th>
+      <th scope="col">Date de mise à jour</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for platform in platforms %}
+    <tr>
+      <th scope="row">{{platform.id}}</th>
+      <td>{{platform.name}}</td>
+      <td>{{platform.createdAt|date('d-m-Y H:i') }}</td>
+      <td>{{platform.updatedAt is not null ? platform.updatedAt|date('d-m-Y H:i')}}</td>
+      <td><a href="{{ path('admin_platform_edit', {'id': platform.id}) }}">Modifier</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table> 
+{% endblock %}

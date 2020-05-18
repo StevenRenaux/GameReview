@@ -52,10 +52,15 @@ class Comment
      */
     private $review;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        $this->resume = substr($this->content, 0, 50) . '...';
     }
 
     public function getId(): ?int
@@ -143,6 +148,18 @@ class Comment
     public function setReview(?Review $review): self
     {
         $this->review = $review;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -1,9 +1,28 @@
 /* base.html.twig concerne l'habillage du body, de nav, et du header */
-body{
-    background-image: url(../images/carapace.png), url(../images/Toad.png);
+.container-md{
+    background-image:
+    url(../images/gta.png),
+    url(../images/Toad.png),
+    url(../images/link.png),
+    url(../images/mario.png),
+    url(../images/pacman.png),
+    url(../images/sonic.png);
+
     background-repeat: no-repeat;
-    background-position-x: 40rem, 3rem;
-    background-position-y: 4.4rem, 2rem;
+    background-position-x: 
+    60rem,
+    3rem,
+    41rem,
+    30rem,
+    80rem,
+    95rem;
+    background-position-y: 
+    2.5rem,
+    -2rem,
+    4rem,
+    1rem,
+    4rem,
+    1rem;
     background-size: 9rem;
 }
 
@@ -28,6 +47,11 @@ body{
 
     .nav-item-console{
         display: none;
+    }
+
+    .nav-users{
+        display: flex;
+        align-items: baseline;
     }
 
     .reviews-container{
@@ -68,6 +92,10 @@ body{
 .reviews{
     display: flex;
     flex-direction: column;
+}
+
+.review{
+    background-color: white;
 }
 
 .review-title-container{
@@ -137,14 +165,33 @@ body{
     overscroll-behavior-y: contain;
 }
 
+/* concernant la partie formulaire des commentaires, login, et 
+form d'ajout, de modification, de tout types */
+.comment-form-help,
+.genre-form-help,
+.review-form-help,
+.user-form-help,
 .comment-form-input,
 .login-form_input,
-.edit-form-input{
+.review-form-input,
+.user-form-input{
     margin-bottom: 2rem;
 }
 
-.edit-form-checkbox{
+/* Cas spécifique pour le label et le help de Console(s) et rôle dans le 
+form d'ajout d'une review et le form d'ajout d'un utilisateur*/
+.review-form-label--platform,
+.user-form-label--role{
+    padding-bottom: 0rem;
+}
 
+.review-form-help--platform,
+.user-form-help--roles{
+    margin-bottom: 1rem;
+}
 
+/* admin/comment/browse concernant tableau d'affichage des commentaires*/
+.col-resume{
+    width: 20rem;
 }
 

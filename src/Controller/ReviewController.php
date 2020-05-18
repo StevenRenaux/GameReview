@@ -20,7 +20,7 @@ class ReviewController extends AbstractController
     public function browse(ReviewRepository $reviewRepository,Request $request,  PaginatorInterface $paginator)
     {
         $reviews = $paginator->paginate(
-            $reviewRepository->findAll(), // Requête contenant les données à paginer (ici nos reviews)
+            $reviewRepository->findByOrderOfCreation(), // Requête contenant les données à paginer (ici nos reviews)
             $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
             2 // Nombre de résultats par page
         );

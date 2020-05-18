@@ -1,22 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}Game Review - {% endblock %}</title>
+        {% block stylesheets %}
+        <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"/>
+        {% endblock %}
+    </head>
+
 {% include 'layout/header.html.twig' %}
 
-<div class="container-main">
-    <div class="reviews-container">
-        {% block body %}
-        {% endblock %}
-    </div>
-    <div class="aside-container">
-        <aside>
-            <div class="card mb-3">
-            <h3 class="card-header">Consoles</h3>
-            <ul class="list-group list-group-flush">
-                {% for platform in platforms %}
-                    <a href="" class="list-group-item">{{platform.name}}</a>
-                {% endfor %}
-            </ul>
+        <div class="container-main">
+            <div class="reviews-container">
+                {% block body %}
+                {% endblock %}
             </div>
-        </aside>
-    </div>
-</div>
+            <div class="aside-container">
+                <aside>
+                    <div class="card mb-3">
+                    <h3 class="card-header">Consoles</h3>
+                    <ul class="list-group list-group-flush">
+                        {% for platform in platforms %}
+                            <a href="{{ path('platform_read', {'name': platform.name}) }}" class="list-group-item">{{platform.name}}</a>
+                        {% endfor %}
+                    </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
 
 {% include 'layout/footer.html.twig' %}

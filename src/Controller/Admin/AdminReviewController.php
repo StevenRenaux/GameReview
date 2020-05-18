@@ -4,8 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\Review;
 use App\Form\DeleteType;
-use App\Form\GameType;
-use App\Form\PlatformType;
 use App\Form\ReviewType;
 use App\Repository\ReviewRepository;
 use App\Services\Slugger;
@@ -15,12 +13,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/admin/review", name="admin_")
+ * @Route("/admin/review", name="admin_review_")
  */
 class AdminReviewController extends AbstractController
 {
     /**
-     * @Route("/browse", name="review_browse")
+     * @Route("/browse", name="browse")
      */
     public function browse(ReviewRepository $reviewRepository)
     {
@@ -30,7 +28,7 @@ class AdminReviewController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="review_edit", requirements={"id": "\d+"})
+     * @Route("/edit/{id}", name="edit", requirements={"id": "\d+"})
      */
     public function edit(Request $request, Review $review, Slugger $slugger)
     {
@@ -74,7 +72,7 @@ class AdminReviewController extends AbstractController
     }
 
     /**
-     * @Route("/add", name="review_add")
+     * @Route("/add", name="add")
      */
     public function add(Request $request, Slugger $slugger)
     {
@@ -98,8 +96,6 @@ class AdminReviewController extends AbstractController
                 // là pour ne pas surcharger le paramconverter et ma méthode en chargement
                 $em = $this->getDoctrine()->getManager();
 
-                // pas besoin de persist car symfo à déjà gardé l'objet Genre grâce au param converter.
-                // Si il s'agissait de linstanciation d'un nouvel objet dans la méthode là on aurait dû persist
                 $em->persist($review);
                 $em->flush();
 
@@ -112,7 +108,7 @@ class AdminReviewController extends AbstractController
     }
 
     /**
-     * @Route("/delete/{id}", name="review_delete", requirements={"id": "\d+"}, methods={"POST", "DELETE"})
+     * @Route("/delete/{id}", name="delete", requirements={"id": "\d+"}, methods={"POST", "DELETE"})
      */
     public function delete(EntityManagerInterface $em, Review $review, Request $request)
     {
