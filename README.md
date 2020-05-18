@@ -1,6 +1,6 @@
 # GameReview
 
-Projet de site de test de jeu.
+Projet de site de test de jeux vidéo.
 
 ## Objectif
 
